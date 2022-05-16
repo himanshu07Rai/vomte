@@ -7,6 +7,7 @@ app.get("/api", (req, res) => {
 });
 
 app.use("/api/dashboard", require("./routes/dashboard"));
+app.use("/api/auth", require("./routes/auth"));
 
 app.listen(5000, () => {
   console.log("bitch");
