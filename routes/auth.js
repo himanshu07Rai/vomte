@@ -1,13 +1,16 @@
 const router = require("express").Router();
 const validInfo = require("../middlewares/validInfo");
-const { getUser, register, login } = require("../controllers/auth");
+const {
+  getUser,
+  register,
+  login,
+  verifyEmail,
+} = require("../controllers/auth");
 
-router.get("/", (req, res) => {
-  //   console.log("req", req);
-  res.status(200).json({ message: "Auth" });
-});
+const prisma = require("../prisma/client");
 
 router.post("/register", validInfo, register);
 router.post("/login", validInfo, login);
+router.get("/verify/:id/:token", verifyEmail);
 
 module.exports = router;
