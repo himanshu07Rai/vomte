@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const createError = require("http-errors");
+require("dotenv").config();
 
 const app = express();
 
@@ -31,5 +32,5 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Running on port ${PORT}`);
+  console.log(`🚀 Running on port ${PORT} 🚀`);
 });
