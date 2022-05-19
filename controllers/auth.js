@@ -18,6 +18,8 @@ const getUser = async (req, res, next) => {
       },
     });
 
+    console.log(req);
+
     res.json(user);
   } catch (err) {
     next(createError(500, "Sever Error"));
