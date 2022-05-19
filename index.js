@@ -16,6 +16,7 @@ app.get("/api", (req, res) => {
 app.use("/api/dashboard", require("./routes/dashboard"));
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/poll", require("./routes/polls"));
+app.use("/api/vote", require("./routes/vote"));
 
 app.use((req, res, next) => {
   next(createError(404, "Not Found"));
