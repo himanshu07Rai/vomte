@@ -17,10 +17,37 @@ model User {
     user_password String
     verified      Boolean
     Token         Token[]
+    Poll          Poll[]
+    Vote          Vote[]
 }
 
 model Token {
     user_id String @id
     user    User   @relation(fields: [user_id], references: [user_id])
     token   String
+}
+
+model Poll {
+    poll_id     String   @id @default(uuid())
+    user_id     String
+    description String
+    user        User     @relation(fields: [user_id], references: [user_id])
+    options     String[]
+    votes       Vote[]
+}
+
+// model Option {
+//     poll_id String @id @default(uuid())
+//     text    String
+//     poll    Poll   @relation(fields: [poll_id], references: [poll_id])
+//     votes   Vote[]
+// }
+
+model Vote {
+    vote_id String @id @default(uuid())
+    user_id String
+    poll_id String
+    option  String
+    user    User   @relation(fields: [user_id], references: [user_id])
+    poll    Poll   @relation(fields: [poll_id], references: [poll_id])
 }
