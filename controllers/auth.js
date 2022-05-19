@@ -1,7 +1,6 @@
 const bcrypt = require("bcryptjs");
 const createError = require("http-errors");
 const jwtGenrator = require("../utils/jwtGenerator");
-// const CryptoJS = require("crypto-js");
 const sendEmail = require("../utils/sendMail");
 const prisma = require("../prisma/client");
 
@@ -54,7 +53,6 @@ const register = async (req, res, next) => {
     let verifyingtoken = await prisma.token.create({
       data: {
         user_id: newUser.user_id,
-        // token: CryptoJS.AES.encrypt("my message", "secret key 123").toString(),
         token: Math.random().toString(36).slice(2),
       },
     });
