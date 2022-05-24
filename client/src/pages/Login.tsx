@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { useLoginMutation } from "../services/authAPI";
 
 const Login = () => {
@@ -30,9 +30,19 @@ const Login = () => {
 
   const navigate = useNavigate();
 
+  const notify = () =>
+    toast("User logged in successfully!", {
+      icon: "👏",
+      style: {
+        borderRadius: "10px",
+        background: "#333",
+        color: "#fff",
+      },
+    });
+
   useEffect(() => {
     if (isSuccess) {
-      toast.success("User login successful!!");
+      notify();
       navigate("/");
     }
   }, [isSuccess]);
