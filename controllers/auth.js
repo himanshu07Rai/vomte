@@ -90,7 +90,7 @@ const login = async (req, res, next) => {
       next(createError(401, "Invalid Password"));
     } else {
       const token = jwtGenrator(user.user_id);
-      res.json(token);
+      res.json({ user, token });
     }
   } catch (error) {
     next(createError(500, error.message));
