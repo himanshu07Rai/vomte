@@ -1,6 +1,4 @@
-import { Toast } from "react-bootstrap";
 import { Toaster } from "react-hot-toast";
-import { ToastContainer } from "react-toastify";
 import "./App.css";
 import PageRoutes from "./PageRoute";
 
