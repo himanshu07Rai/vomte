@@ -9,10 +9,41 @@ import { useAppDispatch } from "../app/hooks";
 import { useAppSelector } from "../app/hooks";
 import { setUser } from "../features/authSlice";
 import { selectAuth } from "../features/authSlice";
+import Spinner from "../components/Spinner";
+
+const notifyError = (a) => {
+  toast.error(a, {
+    style: {
+      border: "1px solid #713200",
+      padding: "16px",
+      color: "#713200",
+    },
+    iconTheme: {
+      primary: "#713200",
+      secondary: "#FFFAEE",
+    },
+  });
+};
+
+const notifySuccess = (a) => {
+  toast.success(a, {
+    style: {
+      border: "1px solid #713200",
+      padding: "16px",
+      color: "#713200",
+    },
+    iconTheme: {
+      primary: "#713200",
+      secondary: "#FFFAEE",
+    },
+  });
+};
 
 const Login = () => {
   const navigate = useNavigate();
   const { user } = useAppSelector(selectAuth);
+  const dispatch = useAppDispatch();
+
   if (user) navigate("/dashboard");
   const [inputs, setInputs] = useState({
     email: "",
@@ -21,42 +52,36 @@ const Login = () => {
 
   const { email, password } = inputs;
 
-  const onChange = (e: any) => {
+  const onChange = (e) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
-  const [loginUser, { data, isSuccess, isError, error }] = useLoginMutation();
-
+  const [loginUser, { data, isLoading, isSuccess, isError, error }] =
+    useLoginMutation();
+  // console.log("error", error);
   const handleLogin = async () => {
     if (email && password) {
       await loginUser(inputs);
     } else {
-      toast.error("df");
+      toast.error("Please fill all the fields !!");
     }
   };
 
-  const dispatch = useAppDispatch();
-
-  const notify = () =>
-    toast.success("user logged in", {
-      style: {
-        border: "1px solid #713200",
-        padding: "16px",
-        color: "#713200",
-      },
-      iconTheme: {
-        primary: "#713200",
-        secondary: "#FFFAEE",
-      },
-    });
+  useEffect(() => {
+    if (isError) {
+      notifyError(error.data.error.message);
+    }
+  }, [isError]);
 
   useEffect(() => {
     if (isSuccess) {
-      notify();
+      notifySuccess("Logged in successfully");
       dispatch(setUser({ user: data.user, token: data.token }));
       navigate("/dashboard");
     }
   }, [isSuccess]);
+
+  if (isLoading) return <Spinner />;
 
   return (
     <Container>

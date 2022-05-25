@@ -5,8 +5,44 @@ import Form from "react-bootstrap/Form";
 import { useRegisterMutation } from "../services/authAPI";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useAppDispatch } from "../app/hooks";
+import { useAppSelector } from "../app/hooks";
+import { setUser } from "../features/authSlice";
+import { selectAuth } from "../features/authSlice";
+import Spinner from "../components/Spinner";
+const notifyError = (a) => {
+  toast.error(a, {
+    style: {
+      border: "1px solid #713200",
+      padding: "16px",
+      color: "#713200",
+    },
+    iconTheme: {
+      primary: "#713200",
+      secondary: "#FFFAEE",
+    },
+  });
+};
+
+const notifySuccess = (a) => {
+  toast.success(a, {
+    style: {
+      border: "1px solid #713200",
+      padding: "16px",
+      color: "#713200",
+    },
+    iconTheme: {
+      primary: "#713200",
+      secondary: "#FFFAEE",
+    },
+  });
+};
 
 const Register = () => {
+  const navigate = useNavigate();
+  const { user } = useAppSelector(selectAuth);
+  const dispatch = useAppDispatch();
+
   const [inputs, setInputs] = useState({
     name: "",
     email: "",
@@ -15,11 +51,11 @@ const Register = () => {
 
   const { name, email, password } = inputs;
 
-  const onChange = (e: any) => {
+  const onChange = (e) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
-  const [registerUser, { data, isSuccess, isError, error }] =
+  const [registerUser, { data, isLoading, isSuccess, isError, error }] =
     useRegisterMutation();
 
   const handleSubmit = async () => {
@@ -29,27 +65,22 @@ const Register = () => {
       toast.error("Enter all fields");
     }
   };
-  const navigate = useNavigate();
-
-  const notify = (data: any) =>
-    toast(data, {
-      icon: "👏",
-      style: {
-        borderRadius: "10px",
-        background: "#333",
-        color: "#fff",
-      },
-    });
 
   useEffect(() => {
     if (isError) {
-      notify(error);
+      notifyError(error.data.error.message);
     }
+  }, [isError]);
+
+  useEffect(() => {
     if (isSuccess) {
-      notify(data);
-      navigate("/");
+      notifySuccess("User Registered successfully");
+      dispatch(setUser({ user: data.user, token: data.token }));
+      navigate("/dashboard");
     }
   }, [isSuccess]);
+
+  if (isLoading) return <Spinner />;
   return (
     <Container>
       <Form>
