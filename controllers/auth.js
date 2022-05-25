@@ -61,7 +61,7 @@ const register = async (req, res, next) => {
     await sendEmail(newUser.user_email, "Verify Email", message);
 
     const token = jwtGenrator(newUser.user_id);
-    res.json(token);
+    res.json({ user: newUser.user_id, token });
   } catch (error) {
     console.log("error.message", error.message);
     next(createError(500, "Server Error"));
