@@ -5,8 +5,15 @@ import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useLoginMutation } from "../services/authAPI";
+import { useAppDispatch } from "../app/hooks";
+import { useAppSelector } from "../app/hooks";
+import { setUser } from "../features/authSlice";
+import { selectAuth } from "../features/authSlice";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const { user } = useAppSelector(selectAuth);
+  if (user) navigate("/dashboard");
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
@@ -28,22 +35,26 @@ const Login = () => {
     }
   };
 
-  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const notify = () =>
-    toast("User logged in successfully!", {
-      icon: "👏",
+    toast.success("user logged in", {
       style: {
-        borderRadius: "10px",
-        background: "#333",
-        color: "#fff",
+        border: "1px solid #713200",
+        padding: "16px",
+        color: "#713200",
+      },
+      iconTheme: {
+        primary: "#713200",
+        secondary: "#FFFAEE",
       },
     });
 
   useEffect(() => {
     if (isSuccess) {
       notify();
-      navigate("/");
+      dispatch(setUser({ user: data.user, token: data.token }));
+      navigate("/dashboard");
     }
   }, [isSuccess]);
 

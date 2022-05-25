@@ -2,8 +2,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import toast from "react-hot-toast";
 import Register from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
 
-const notify = () =>
+const notify = (a: string) =>
   toast("Hello Darkness!", {
     icon: "👏",
     style: {
@@ -15,7 +16,7 @@ const notify = () =>
 const Home = () => {
   return (
     <>
-      <button onClick={notify}>Make me a toast</button>
+      <button onClick={() => notify("ho")}>Make me a toast</button>
     </>
   );
 };
@@ -26,7 +27,8 @@ function PageRoutes() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
-        <Route path="login" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
   );
