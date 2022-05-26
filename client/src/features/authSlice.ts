@@ -26,6 +26,7 @@ export const authSlice = createSlice({
           token: action.payload.token,
         })
       );
+      localStorage.setItem("token", action.payload.token);
       state.user = action.payload.user;
       state.token = action.payload.token;
     },
