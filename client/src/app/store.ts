@@ -15,7 +15,9 @@ export const store = configureStore({
     [pollApi.reducerPath]: pollApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(authApi.middleware),
+    getDefaultMiddleware()
+      .concat(authApi.middleware)
+      .concat(pollApi.middleware),
 });
 
 export type AppDispatch = typeof store.dispatch;

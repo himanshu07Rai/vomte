@@ -11,11 +11,14 @@ export const pollSlice = createSlice({
     setPolls: (state, action) => {
       state.polls = action.payload;
     },
+    addPoll: (state, action) => {
+      state.polls.push(action.payload);
+    },
   },
 });
 
 export const selectPolls = (state) => state.poll;
 
-export const { setPolls } = pollSlice.actions;
+export const { setPolls, addPoll } = pollSlice.actions;
 
 export default pollSlice.reducer;

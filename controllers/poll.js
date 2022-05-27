@@ -12,7 +12,7 @@ const createPoll = async (req, res, next) => {
         options,
       },
     });
-    res.json({ poll: newPoll });
+    res.json(newPoll);
   } catch (error) {
     next(createError(500, error.message));
   }
@@ -20,8 +20,9 @@ const createPoll = async (req, res, next) => {
 
 const getAllPolls = async (req, res, next) => {
   try {
+    // console.log(req);
     const polls = await prisma.poll.findMany();
-    res.json({ poll: polls });
+    res.json(polls);
   } catch (error) {
     next(createError(500, error.message));
   }

@@ -3,6 +3,7 @@ import Login from "./pages/Login";
 import toast from "react-hot-toast";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import CreatePoll from "./pages/CreatePoll";
 
 const notify = (a: string) =>
   toast("Hello Darkness!", {
@@ -29,6 +30,7 @@ function PageRoutes() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/createPoll" element={<CreatePoll />} />
       </Routes>
     </BrowserRouter>
   );

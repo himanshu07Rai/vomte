@@ -10,9 +10,9 @@ module.exports = async (req, res, next) => {
     if (!token) {
       next(createError(403, "No token, authorisation denied"));
     }
-
+    // next(createError(403, "authorisation denied"));
     // console.log("payload");
-    const payload = await jwt.verify(token, process.env.jwtSecret);
+    const payload = jwt.verify(token, process.env.jwtSecret);
     req.user = payload.user.id;
     // console.log(req.user);
     next();

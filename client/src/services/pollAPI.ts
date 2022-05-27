@@ -7,9 +7,8 @@ export const pollApi = createApi({
     baseUrl: "http://localhost:5000/api/poll",
     prepareHeaders: (headers, { getState }) => {
       const token = localStorage.getItem("token");
-      console.log(token);
+      // console.log(token);
 
-      // If we have a token set in state, let's assume that we should be passing it.
       if (token) {
         headers.set("auth-token", `${token}`);
       }
@@ -17,16 +16,8 @@ export const pollApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ["Polls"],
   endpoints: (builder) => ({
-    createPoll: builder.mutation({
-      query: (body) => {
-        return {
-          url: "/",
-          method: "post",
-          body,
-        };
-      },
-    }),
     getPolls: builder.query({
       query: () => {
         return {
@@ -35,6 +26,17 @@ export const pollApi = createApi({
           // headers,
         };
       },
+      providesTags: ["Polls"],
+    }),
+    createPoll: builder.mutation({
+      query: (body) => {
+        return {
+          url: "/",
+          method: "post",
+          body,
+        };
+      },
+      invalidatesTags: ["Polls"],
     }),
   }),
 });
