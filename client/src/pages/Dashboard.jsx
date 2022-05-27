@@ -1,5 +1,5 @@
-import { useAppSelector } from "../app/hooks";
-import { useAppDispatch } from "../app/hooks";
+import { useAppSelector, useAppDispatch } from "../app/hooks";
+
 import { selectAuth } from "../features/authSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Container, Form } from "react-bootstrap";
@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import { selectPolls, setPolls } from "../features/pollSlice";
 import { useGetPollsQuery } from "../services/pollAPI";
 import SpinnerComp from "../components/Spinner";
+import Quiz from "../components/Quiz";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ const Dashboard = () => {
   return (
     <Container>
       {user}
-      {JSON.stringify(polls.polls)}
+      <Quiz data={data} />
       <Link to="/createPoll">Create Poll</Link>
       <Button onClick={handleLogout}>Logout</Button>
     </Container>
