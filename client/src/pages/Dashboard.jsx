@@ -1,5 +1,5 @@
 import { useAppSelector, useAppDispatch } from "../app/hooks";
-
+import { useEffect } from "react";
 import { selectAuth } from "../features/authSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Container, Form } from "react-bootstrap";
@@ -16,6 +16,7 @@ const Dashboard = () => {
   const { user } = useAppSelector(selectAuth);
   const polls = useAppSelector(selectPolls);
   if (!user) navigate("/login");
+
   const notify = () => {
     toast.success("Logout", {
       style: {
@@ -37,9 +38,9 @@ const Dashboard = () => {
   const { data, isLoading } = useGetPollsQuery();
   console.log("polls", polls);
   console.log(data);
-  // useEffect(() => {
-  dispatch(setPolls(data));
-  // }, []);
+  useEffect(() => {
+    dispatch(setPolls(data));
+  }, []);
   if (isLoading) return <SpinnerComp />;
   return (
     <Container>

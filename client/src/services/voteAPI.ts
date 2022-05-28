@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../app/store";
 
-export const pollApi = createApi({
+export const voteApi = createApi({
   reducerPath: "voteApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:5000/api/vote",
@@ -23,12 +23,11 @@ export const pollApi = createApi({
         return {
           url: "/",
           method: "get",
-          // headers,
         };
       },
       providesTags: ["Votes"],
     }),
-    createPoll: builder.mutation({
+    vote: builder.mutation({
       query: (body) => {
         return {
           url: "/",
@@ -41,4 +40,4 @@ export const pollApi = createApi({
   }),
 });
 
-export const { useCreatePollMutation, useGetVotesQuery } = pollApi;
+export const { useVoteMutation, useGetVotesQuery } = voteApi;

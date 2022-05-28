@@ -61,6 +61,7 @@ const Login = () => {
   // console.log("error", error);
   const handleLogin = async () => {
     if (email && password) {
+      console.log(data);
       await loginUser(inputs);
     } else {
       toast.error("Please fill all the fields !!");
