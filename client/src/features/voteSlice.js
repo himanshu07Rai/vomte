@@ -1,23 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  votes: [],
+  storeVotes: [],
 };
 
 export const voteSlice = createSlice({
-  name: "poll",
+  name: "vote",
   initialState,
   reducers: {
     setVotes: (state, action) => {
-      state.votes = action.payload;
+      state.storeVotes = action.payload;
     },
     addVote: (state, action) => {
-      state.polls.push(action.payload);
+      state.storeVotes.push(action.payload);
     },
   },
 });
 
-export const selectPolls = (state) => state.poll;
+export const selectVotes = (state) => state.vote;
 
 export const { setVotes, addVote } = voteSlice.actions;
 

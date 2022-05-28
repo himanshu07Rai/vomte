@@ -1,18 +1,22 @@
 import React, { useEffect } from "react";
-import { useGetVotesQuery, useVoteMutation } from "../services/voteAPI";
-import SpinnerComp from "./Spinner";
-import { useAppDispatch } from "../app/hooks";
-import { setVotes } from "../features/voteSlice";
 import toast from "react-hot-toast";
 
-const Quiz = ({ data }) => {
-  const dispatch = useAppDispatch();
-  const { data: votes, isLoading: isVoteLoading } = useGetVotesQuery();
-  console.log(data);
+import { useGetVotesQuery, useVoteMutation } from "../services/voteAPI";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { setVotes } from "../features/voteSlice";
 
-  if (votes) {
-    dispatch(setVotes(votes));
-  }
+import SpinnerComp from "./Spinner";
+
+const Quiz = ({ data, storeVotes }) => {
+  const dispatch = useAppDispatch();
+  const {
+    data: votes,
+    isLoading: isVoteLoading,
+    isError: isVoteError,
+    error: voteError,
+  } = useGetVotesQuery();
+  // console.log(data);
+
   const [vote, { data: newVote, isLoading, isError, error }] =
     useVoteMutation();
   useEffect(() => {
@@ -26,27 +30,48 @@ const Quiz = ({ data }) => {
       toast(error.data.error.message);
     }
   }, [isError]);
-
+  useEffect(() => {
+    if (isVoteError) {
+      toast(voteError.data.error.message);
+    }
+  }, [isVoteError]);
   const handleVote = (e) => {
     vote(e);
-    console.log(e);
+    // console.log(e);
   };
+
+  // console.log("storeVotes", storeVotes);
   return (
     <div>
-      {data.map((q) => (
-        <div key={q.poll_id}>
-          <h1>{q.description}</h1>
-          {q.options.map((op, index) => (
-            <button
-              key={index}
-              onClick={() => handleVote({ poll_id: q.poll_id, option: op })}
-            >
-              {op}
-            </button>
-          ))}
-          <h3>Voting</h3>
-        </div>
-      ))}
+      {data.map((p) => {
+        let res;
+        if (storeVotes && storeVotes.length > 0) {
+          res = storeVotes.filter((vote) => vote.poll_id == p.poll_id);
+          console.log("p.poll_id", p.poll_id);
+          console.log("res", res);
+        }
+        return (
+          <div key={p.poll_id}>
+            <h1>{p.description}</h1>
+            {p.options.map((op, index) => {
+              let num = 0;
+              if (res) {
+                num = res.filter((vote) => vote.option === op);
+              }
+
+              return (
+                <button
+                  key={index}
+                  onClick={() => handleVote({ poll_id: p.poll_id, option: op })}
+                >
+                  {op}-{num.length}
+                </button>
+              );
+            })}
+            <h3>Voting</h3>
+          </div>
+        );
+      })}
     </div>
   );
 };

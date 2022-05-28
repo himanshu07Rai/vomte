@@ -11,8 +11,8 @@ export const pollSlice = createSlice({
     setPolls: (state, action) => {
       state.polls = action.payload;
     },
-    addPoll: (state, action) => {
-      state.polls.push(action.payload);
+    addPoll: (state, { payload }) => {
+      state.polls.push(payload);
     },
   },
 });

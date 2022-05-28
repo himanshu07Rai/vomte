@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { useAppSelector } from "../app/hooks";
-import { useAppDispatch } from "../app/hooks";
-import { selectAuth } from "../features/authSlice";
 import { useNavigate } from "react-router-dom";
 import { Button, Container, Form } from "react-bootstrap";
 import toast from "react-hot-toast";
-import { useCreatePollMutation, useGetPollsQuery } from "../services/pollAPI";
+
+import { useAppSelector } from "../app/hooks";
+import { useAppDispatch } from "../app/hooks";
+import { selectAuth } from "../features/authSlice";
+import { useCreatePollMutation } from "../services/pollAPI";
 import { addPoll } from "../features/pollSlice";
 
 const CreatePoll = () => {
@@ -13,8 +14,8 @@ const CreatePoll = () => {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector(selectAuth);
   if (!user) navigate("/login");
-  const notify = () => {
-    toast.success("Created", {
+  const notify = (msg) => {
+    toast.success(msg, {
       style: {
         border: "1px solid #713200",
         padding: "16px",
@@ -34,19 +35,26 @@ const CreatePoll = () => {
   const [option4, setOption4] = useState("");
   let poll;
   const [createPoll, { isSuccess, isError, error }] = useCreatePollMutation();
+
   const handleSubmit = async () => {
     let options = [option1, option2, option3, option4];
+    if (!description || !option1 || !option2 || !option3 || !option4) {
+      notify("Fill all fields");
+      return;
+    }
+
     poll = await createPoll({ description, options });
-    console.log(poll.data);
+    dispatch(addPoll(poll.data));
+    notify("Created");
+    // console.log(isSuccess);
+    navigate("/dashboard");
   };
 
   useEffect(() => {
-    if (isSuccess) {
-      dispatch(addPoll(poll));
-      notify();
-      navigate("/dashboard");
+    if (isError) {
+      notify("Error");
     }
-  }, [isSuccess]);
+  }, [isError]);
 
   return (
     <Container>
