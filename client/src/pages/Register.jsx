@@ -10,6 +10,7 @@ import { useAppSelector } from "../app/hooks";
 import { setUser } from "../features/authSlice";
 import { selectAuth } from "../features/authSlice";
 import Spinner from "../components/Spinner";
+import { Link } from "react-router-dom";
 const notifyError = (a) => {
   toast.error(a, {
     style: {
@@ -82,39 +83,55 @@ const Register = () => {
 
   if (isLoading) return <Spinner />;
   return (
-    <Container>
+    <Container className="mt-5">
       <Form>
-        <Form.Group>
-          <Form.Label>Name</Form.Label>
-          <Form.Control
+        <h3>Sign Up</h3>
+        <div className="mb-3">
+          <label>Email address</label>
+          <input
             name="name"
             type="text"
+            className="form-control mt-2"
             placeholder="John Doe"
             value={name}
             onChange={(e) => onChange(e)}
           />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Email</Form.Label>
-          <Form.Control
+        </div>
+        <div className="mb-3">
+          <label>Email address</label>
+          <input
             name="email"
-            type="email"
+            type="text"
             placeholder="name@example.com"
+            className="form-control mt-2"
             value={email}
             onChange={(e) => onChange(e)}
           />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Password</Form.Label>
-          <Form.Control
+        </div>
+        <div className="mb-3">
+          <label>Password</label>
+          <input
             name="password"
             type="password"
-            placeholder="name@example.com"
+            placeholder="*******"
             value={password}
+            className="form-control mt-2"
             onChange={(e) => onChange(e)}
           />
-        </Form.Group>
-        <Button onClick={handleSubmit}>Register</Button>
+        </div>
+
+        <div className="d-grid">
+          <button
+            onClick={handleSubmit}
+            type="submit"
+            className="btn btn-primary"
+          >
+            Register
+          </button>
+        </div>
+        <p className="forgot-password text-right mt-2">
+          Already have an account ? <Link to="/login">Login</Link>
+        </p>
       </Form>
     </Container>
   );

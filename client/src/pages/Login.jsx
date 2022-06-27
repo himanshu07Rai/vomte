@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
-import { Button } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useLoginMutation } from "../services/authAPI";
@@ -10,6 +8,7 @@ import { useAppSelector } from "../app/hooks";
 import { setUser } from "../features/authSlice";
 import { selectAuth } from "../features/authSlice";
 import Spinner from "../components/Spinner";
+import { Link } from "react-router-dom";
 
 const notifyError = (a) => {
   toast.error(a, {
@@ -85,30 +84,45 @@ const Login = () => {
   if (isLoading) return <Spinner />;
 
   return (
-    <Container>
-      <Form>
-        <Form.Group>
-          <Form.Label>Email</Form.Label>
-          <Form.Control
+    <Container className="mt-5">
+      <form>
+        <h3>Sign In</h3>
+        <div className="mb-3">
+          <label>Email address</label>
+          <input
             name="email"
             type="text"
             placeholder="name@example.com"
+            className="form-control mt-2"
             value={email}
             onChange={(e) => onChange(e)}
           />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Password</Form.Label>
-          <Form.Control
+        </div>
+        <div className="mb-3">
+          <label>Password</label>
+          <input
             name="password"
             type="password"
-            placeholder="name@example.com"
+            placeholder="*******"
             value={password}
+            className="form-control mt-2"
             onChange={(e) => onChange(e)}
           />
-        </Form.Group>
-        <Button onClick={handleLogin}>Login</Button>
-      </Form>
+        </div>
+
+        <div className="d-grid">
+          <button
+            onClick={handleLogin}
+            type="submit"
+            className="btn btn-primary"
+          >
+            Login
+          </button>
+        </div>
+        <p className="forgot-password text-right mt-2">
+          Don't have an account ? <Link to="/register">Register</Link>
+        </p>
+      </form>
     </Container>
   );
 };

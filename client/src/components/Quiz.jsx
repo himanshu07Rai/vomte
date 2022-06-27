@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { setVotes } from "../features/voteSlice";
 
 import SpinnerComp from "./Spinner";
+import { logout } from "../features/authSlice";
 
 const Quiz = ({ data, storeVotes }) => {
   const dispatch = useAppDispatch();
@@ -32,6 +33,7 @@ const Quiz = ({ data, storeVotes }) => {
   }, [isError]);
   useEffect(() => {
     if (isVoteError) {
+      if (voteError.data.error.message === "jwt expired") dispatch(logout());
       toast(voteError.data.error.message);
     }
   }, [isVoteError]);
