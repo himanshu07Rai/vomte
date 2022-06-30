@@ -12,7 +12,7 @@ import { addPoll } from "../features/pollSlice";
 const CreatePoll = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector(selectAuth);
+  const { user, name } = useAppSelector(selectAuth);
   if (!user) navigate("/login");
   const notify = (msg) => {
     toast.success(msg, {
@@ -58,10 +58,12 @@ const CreatePoll = () => {
 
   return (
     <Container>
-      {user}
+      <h2>Hi {name} !!</h2>
       <Form>
         <Form.Group>
-          <Form.Label>dscription</Form.Label>
+          <h3 className="mt-2">
+            <Form.Label>Description</Form.Label>
+          </h3>
           <Form.Control
             name="description"
             type="text"
@@ -71,7 +73,9 @@ const CreatePoll = () => {
           />
         </Form.Group>
         <Form.Group>
-          <Form.Label>Option 1</Form.Label>
+          <h4 className="mt-2">
+            <Form.Label>Option 1</Form.Label>
+          </h4>
           <Form.Control
             name="op1"
             type="text"
@@ -81,7 +85,9 @@ const CreatePoll = () => {
           />
         </Form.Group>
         <Form.Group>
-          <Form.Label>Option 2</Form.Label>
+          <h4 className="mt-2">
+            <Form.Label>Option 2</Form.Label>
+          </h4>
           <Form.Control
             name="op2"
             type="text"
@@ -91,7 +97,9 @@ const CreatePoll = () => {
           />
         </Form.Group>
         <Form.Group>
-          <Form.Label>Option 3</Form.Label>
+          <h4 className="mt-2">
+            <Form.Label>Option 3</Form.Label>
+          </h4>
           <Form.Control
             name="op3"
             type="text"
@@ -101,7 +109,9 @@ const CreatePoll = () => {
           />
         </Form.Group>
         <Form.Group>
-          <Form.Label>Option 4</Form.Label>
+          <h4 className="mt-2">
+            <Form.Label>Option 4</Form.Label>
+          </h4>
           <Form.Control
             name="op4"
             type="text"
@@ -110,7 +120,9 @@ const CreatePoll = () => {
             onChange={(e) => setOption4(e.target.value)}
           />
         </Form.Group>
-        <Button onClick={handleSubmit}>Submit</Button>
+        <Button className="mt-3" onClick={handleSubmit}>
+          Submit
+        </Button>
       </Form>
     </Container>
   );

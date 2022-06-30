@@ -76,14 +76,16 @@ const Register = () => {
   useEffect(() => {
     if (isSuccess) {
       notifySuccess("User Registered successfully");
-      dispatch(setUser({ user: data.user, token: data.token }));
+      dispatch(
+        setUser({ user: data.user, name: data.name, token: data.token })
+      );
       navigate("/dashboard");
     }
   }, [isSuccess]);
 
   if (isLoading) return <Spinner />;
   return (
-    <Container className="mt-5">
+    <Container className="pt-3">
       <Form>
         <h3>Sign Up</h3>
         <div className="mb-3">

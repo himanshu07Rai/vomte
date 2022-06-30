@@ -60,7 +60,7 @@ const Login = () => {
   // console.log("error", error);
   const handleLogin = async () => {
     if (email && password) {
-      console.log(data);
+      // console.log(data);
       await loginUser(inputs);
     } else {
       toast.error("Please fill all the fields !!");
@@ -76,7 +76,10 @@ const Login = () => {
   useEffect(() => {
     if (isSuccess) {
       notifySuccess("Logged in successfully");
-      dispatch(setUser({ user: data.user, token: data.token }));
+      console.log("data", data);
+      dispatch(
+        setUser({ user: data.user, name: data.name, token: data.token })
+      );
       navigate("/dashboard");
     }
   }, [isSuccess]);
@@ -84,8 +87,8 @@ const Login = () => {
   if (isLoading) return <Spinner />;
 
   return (
-    <Container className="mt-5">
-      <form>
+    <Container>
+      <form className="pt-3">
         <h3>Sign In</h3>
         <div className="mb-3">
           <label>Email address</label>

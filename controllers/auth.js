@@ -61,7 +61,7 @@ const register = async (req, res, next) => {
     await sendEmail(newUser.user_email, "Verify Email", message);
 
     const token = jwtGenrator(newUser.user_id);
-    res.json({ user: newUser.user_id, token });
+    res.json({ user: newUser.user_id, name: newUser.user_name, token });
   } catch (error) {
     console.log("error.message", error.message);
     next(createError(500, "Server Error"));
@@ -90,7 +90,7 @@ const login = async (req, res, next) => {
       next(createError(401, "Invalid Password"));
     } else {
       const token = jwtGenrator(user.user_id);
-      res.json({ user: user.user_id, token });
+      res.json({ user: user.user_id, name: user.user_name, token });
     }
   } catch (error) {
     next(createError(500, error.message));

@@ -42,9 +42,14 @@ const Quiz = ({ data, storeVotes }) => {
     // console.log(e);
   };
 
+  console.log(data);
+
+  if (data.length === 0)
+    return <h3 className="text-center">No polls available right now</h3>;
+
   // console.log("storeVotes", storeVotes);
   return (
-    <div>
+    <div className="py-5">
       {data.map((p) => {
         let res;
         if (storeVotes && storeVotes.length > 0) {
@@ -53,24 +58,31 @@ const Quiz = ({ data, storeVotes }) => {
           console.log("res", res);
         }
         return (
-          <div key={p.poll_id}>
-            <h1>{p.description}</h1>
-            {p.options.map((op, index) => {
-              let num = 0;
-              if (res) {
-                num = res.filter((vote) => vote.option === op);
-              }
+          <div
+            key={p.poll_id}
+            className="rounded mb-5 shadow p-3 bg-info bg-gradient"
+          >
+            <h1>Q. {p.description}</h1>
+            <div className="d-flex flex-sm-row flex-column overflow-auto">
+              {p.options.map((op, index) => {
+                let num = 0;
+                if (res) {
+                  num = res.filter((vote) => vote.option === op);
+                }
 
-              return (
-                <button
-                  key={index}
-                  onClick={() => handleVote({ poll_id: p.poll_id, option: op })}
-                >
-                  {op}-{num.length}
-                </button>
-              );
-            })}
-            <h3>Voting</h3>
+                return (
+                  <button
+                    className="border-0 m-sm-2 mb-3 rounded p-2 px-4 bg-light shadow "
+                    key={index}
+                    onClick={() =>
+                      handleVote({ poll_id: p.poll_id, option: op })
+                    }
+                  >
+                    {op}-{num.length}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         );
       })}

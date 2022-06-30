@@ -31,11 +31,13 @@ const notify = () => {
 const Dashboard = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector(selectAuth);
+  const { user, name } = useAppSelector(selectAuth);
   const polls = useAppSelector(selectPolls);
   const storeVotes = useAppSelector(selectVotes);
   // console.log("storeVotes", storeVotes);
   if (!user) navigate("/login");
+
+  // console.log("user", user);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -57,11 +59,17 @@ const Dashboard = () => {
   if (isLoading || isVoteLoading) return <SpinnerComp />;
   // console.log("polls.polls", polls.polls);
   return (
-    <Container>
-      {user}
+    <Container className="position-relative">
+      <h2 className="text-center pt-4">Welcome {name}</h2>
+      <div className="rounded p-3 shadow bg-light text-center mt-5 text-uppercase fs-4">
+        <Link className="text-decoration-none" to="/createPoll">
+          Create Poll
+        </Link>
+      </div>
+      <Button className="position-absolute top-0 end-0" onClick={handleLogout}>
+        Logout
+      </Button>
       <Quiz data={polls.polls} storeVotes={storeVotes.storeVotes} />
-      <Link to="/createPoll">Create Poll</Link>
-      <Button onClick={handleLogout}>Logout</Button>
     </Container>
   );
 };

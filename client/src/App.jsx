@@ -14,11 +14,10 @@ function App() {
     dispatch(setUser(user));
   }, []);
   return (
-    <>
+    <div>
       <Toaster position="bottom-center" reverseOrder={true} />
-      {/* <ToastContainer /> */}
       <PageRoutes />
-    </>
+    </div>
   );
 }
 
