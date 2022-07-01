@@ -4,23 +4,7 @@ import toast from "react-hot-toast";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import CreatePoll from "./pages/CreatePoll";
-
-const notify = (a: string) =>
-  toast("Hello Darkness!", {
-    icon: "👏",
-    style: {
-      borderRadius: "10px",
-      background: "#333",
-      color: "#fff",
-    },
-  });
-const Home = () => {
-  return (
-    <>
-      <button onClick={() => notify("ho")}>Make me a toast</button>
-    </>
-  );
-};
+import Home from "./pages/Home";
 
 function PageRoutes() {
   return (

@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 const createError = require("http-errors");
 require("dotenv").config();
 
@@ -7,7 +8,12 @@ const app = express();
 
 app.use(express.json());
 
+const corsOptions = { origin: "*" };
+app.use(cors(corsOptions));
+
 app.use(cors());
+
+app.use(express.static(path.join(__dirname, "client/build")));
 
 app.get("/api", (req, res) => {
   res.status(200).send("🚀 Server running 🚀");
@@ -23,7 +29,7 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  console.log(err.message);
+  // console.log(err.message);
   res.status(err.status || 500);
   res.send({
     error: {
@@ -34,6 +40,11 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 5000;
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client/build/index.html"));
+});
+
 app.listen(PORT, () => {
   console.log(`🚀 Running on port ${PORT} 🚀`);
 });

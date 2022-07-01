@@ -4,7 +4,7 @@ import { RootState } from "../app/store";
 export const pollApi = createApi({
   reducerPath: "pollApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5000/api/poll",
+    baseUrl: "/api/poll",
     prepareHeaders: (headers, { getState }) => {
       const token = localStorage.getItem("token");
       // console.log(token);
