@@ -4,7 +4,7 @@ import { RootState } from "../app/store";
 export const voteApi = createApi({
   reducerPath: "voteApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "vomte.herokuapp.com/api/vote",
+    baseUrl: "https://vomte.herokuapp.com/api/vote",
     prepareHeaders: (headers, { getState }) => {
       const token = localStorage.getItem("token");
       // console.log(token);
