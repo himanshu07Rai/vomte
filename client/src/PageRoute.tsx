@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import toast from "react-hot-toast";
 import Register from "./pages/Register";
@@ -8,7 +8,7 @@ import Home from "./pages/Home";
 
 function PageRoutes() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
@@ -16,7 +16,7 @@ function PageRoutes() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/createPoll" element={<CreatePoll />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
