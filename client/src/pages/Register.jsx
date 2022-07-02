@@ -89,7 +89,7 @@ const Register = () => {
       <Form>
         <h3>Sign Up</h3>
         <div className="mb-3">
-          <label>Email address</label>
+          <label>Name</label>
           <input
             name="name"
             type="text"
